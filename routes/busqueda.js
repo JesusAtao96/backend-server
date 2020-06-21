@@ -57,7 +57,7 @@ app.get('/todo/:busqueda', (req, res) => {
     Promise.all([
         buscarHospitales(busqueda, regex),
         buscarMedicos(busqueda, regex),
-        buscarUsuario(busqueda, regex)
+        buscarUsuarios(busqueda, regex)
     ])
         .then(respuestas => {
             res.status(200).json({
@@ -100,7 +100,7 @@ function buscarMedicos(busqueda, regex) {
 
 function buscarUsuarios(busqueda, regex) {
     return new Promise((resolve, reject) => {
-        Usuario.find({}, 'nombre email role')
+        Usuario.find({}, 'nombre email img role google')
             .or([{ 'nombre': regex }, { 'email': regex }])
             .exec((err, usuarios) => {
                 if (err) {
